@@ -1,6 +1,6 @@
 <body>
 	<table align="center">
-		<tr> <th colspan="3">💻Scripts / Bots💻</th> </tr>
+		<tr> <th colspan="3">Library Information</th> </tr>
 		<tr>
 			<td>
 				<a href='https://nz-uapy.readthedocs.io/en/latest/'><img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Amino_icon.jpg" height="25px">
