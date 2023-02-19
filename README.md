@@ -12,11 +12,11 @@
 		<tr> <th colspan="3">More info</th> </tr>
 		<tr>
 			<td>
-				<a href="https://t.me/DxsarzUnion"><img src="https://i0.wp.com/tokar.ua/img/upl/2017/10/ba2a64297ef51b85f7848efdc671f41c.png?fit=600%2C350&ssl=1" height="30px">
+				<a href="https://t.me/DxsarzUnion"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" height="30px">
 				 Telegram Channel</a>
 			</td>
 			<td>
-				<a href="https://www.youtube.com/channel/UCNKEgQmAvt6dD7jeMLpte9Q"><img src="https://www.svgrepo.com/show/13671/youtube.svg" height="30px">
+				<a href="https://www.youtube.com/channel/UCNKEgQmAvt6dD7jeMLpte9Q"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" height="30px">
 				 YouTube channel</a>
 			</td>
 			<td>
