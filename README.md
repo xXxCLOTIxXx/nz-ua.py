@@ -1,6 +1,5 @@
 <body>
 <H1 align="center"><a href='https://nz-uapy.readthedocs.io/en/latest/'>Library Documentation</a></H1>
-	
 	<table align="center">
 		<tr> <th colspan="3">💻Scripts / Bots💻</th> </tr>
 		<tr>
