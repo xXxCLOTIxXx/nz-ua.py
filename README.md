@@ -20,7 +20,7 @@
 				 YouTube channel</a>
 			</td>
 			<td>
-				<a href="https://discord.gg/GtpUnsHHT4"><img src="https://pbs.twimg.com/profile_images/525686734760067072/OhsWgbsr_400x400.png" height="30px">
+				<a href="https://discord.gg/GtpUnsHHT4"><img src="https://www.svgrepo.com/show/353655/discord-icon.svg" height="30px">
 				 Discord Server</a>
 			</td>
 		</tr>
