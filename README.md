@@ -7,6 +7,7 @@
 				 Library Documentation</a>
 			</td>
 	</table>
+	<table align="center">
 		</tr>
 		<tr> <th colspan="3">More info</th> </tr>
 		<tr>
@@ -23,4 +24,5 @@
 				 Discord Server</a>
 			</td>
 		</tr>
+	</table>
 </body>
