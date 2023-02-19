@@ -16,7 +16,7 @@
 				 Telegram Channel</a>
 			</td>
 			<td>
-				<a href="https://www.youtube.com/channel/UCNKEgQmAvt6dD7jeMLpte9Q"><img src="https://pbs.twimg.com/profile_images/525686734760067072/OhsWgbsr_400x400.png" height="30px">
+				<a href="https://www.youtube.com/channel/UCNKEgQmAvt6dD7jeMLpte9Q"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" height="30px">
 				 YouTube channel</a>
 			</td>
 			<td>
