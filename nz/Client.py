@@ -2,6 +2,8 @@ from json import dumps, loads
 from .utils import exceptions, helpers, objects
 from .utils.headers import Headers
 
+from aiofiles.threadpool.binary import AsyncBufferedReader
+
 class Client(Headers):
 	def __init__(self, profile: objects.Student = None):
 		self.api = 'https://api-mobile.nz.ua/v1'
@@ -83,3 +85,15 @@ class Client(Headers):
 
 		response = await helpers.post(f"{self.api}/schedule/subject-grades", headers=self.headers(data=data, access_token=self.student.access_token), data=data)
 		return response
+
+
+	async def delete_hometask_file(self, file_id):
+		#TODO: objects for this 
+
+		data = dumps({"file_id": file_id})
+		response = await helpers.post(f"{self.api}/schedule/delete-hometask-file", headers=self.headers(data=data, access_token=self.student.access_token), data=data)
+		return response
+
+	async def load_hometask_file(self, file: AsyncBufferedReader):
+		#TODO THIS
+		pass
