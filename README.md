@@ -7,6 +7,7 @@
 				 Library Documentation</a>
 			</td>
 		</tr>
+		<tr> <th colspan="3">More info</th> </tr>
 		<tr>
 			<td>
 				<a href="https://t.me/DxsarzUnion"><img src="https://pbs.twimg.com/profile_images/525686734760067072/OhsWgbsr_400x400.png" height="30px">
