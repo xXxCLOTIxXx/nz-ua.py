@@ -12,7 +12,7 @@
 		<tr> <th colspan="3">More info</th> </tr>
 		<tr>
 			<td>
-				<a href="https://t.me/DxsarzUnion"><img src="https://images-wsrv.thepage.ua/?w=660&we=1&output=webp&url=https%3A%2F%2Fthepage.fra1.digitaloceanspaces.com%2Flive%2Fmedia%2F132483%2Ftelegram-messenger-foto-telegramorg.jpg%3Fv%3D1618251405" height="30px">
+				<a href="https://t.me/DxsarzUnion"><img src="https://images-wsrv.thepage.ua/?w=660&we=1&output=webp&url=https%3A%2F%2Fthepage.fra1.digitaloceanspaces.com%2Flive%2Fmedia%2F132483%2Ftelegram-messenger-foto-telegramorg.jpg%3Fv%3D1618251405" height="50px">
 				 Telegram Channel</a>
 			</td>
 			<td>
