@@ -28,80 +28,69 @@ class Client(Headers):
 		return self.student
 
 
-	async def get_schedule(self, start_date: str = "2023-02-13", end_date: str = "2023-02-19"):
+	async def get_schedule(self, start_date: str = None, end_date: str = None):
 
 		data = dumps({
-			"start_date": start_date,
-			"end_date": end_date,
-			"student_id": self.student.student_id
+			"start_date": start_date if start_date else helpers.get_week()['start'],
+			"end_date": end_date if end_date else helpers.get_week()['end'],
+			"student_id": self.student.studentId
 		})
 
-		response = objects.Schedule(await helpers.post(f"{self.api}/schedule/diary", headers=self.headers(data=data, access_token=self.student.access_token), data=data))
+		response = objects.Schedule(await helpers.post(f"{self.api}/schedule/diary", headers=self.headers(data=data, access_token=self.student.accessToken), data=data))
 		return response
 
 
-	async def get_hometask(self, hometask_id: int):
+	async def get_hometask(self, hometaskId: int):
+
 		data = dumps({
-			"distance_hometask_id": hometask_id,
-			"student_id": self.student.student_id
+			"distance_hometask_id": hometaskId,
+			"student_id": self.student.studentId
 		})
 
-		response = objects.Hometask(await helpers.post(f"{self.api}/schedule/distance-hometask", headers=self.headers(data=data, access_token=self.student.access_token), data=data))
+		response = objects.Hometask(await helpers.post(f"{self.api}/schedule/distance-hometask", headers=self.headers(data=data, access_token=self.student.accessToken), data=data))
 		return response
 
-	async def get_timetable(self, start_date: str = "2023-02-13", end_date: str = "2023-02-19"):
-		#TODO: objects for this 
+	async def get_timetable(self, start_date: str = None, end_date: str = None):
+
 		data = dumps({
-			"start_date": start_date,
-			"end_date": end_date,
-			"student_id": self.student.student_id
+			"start_date": start_date if start_date else helpers.get_week()['start'],
+			"end_date": end_date if end_date else helpers.get_week()['end'],
+			"student_id": self.student.studentId
 		})
 
-		response = objects.Timetable(await helpers.post(f"{self.api}/schedule/diary", headers=self.headers(data=data, access_token=self.student.access_token), data=data))
+		response = objects.Timetable(await helpers.post(f"{self.api}/schedule/diary", headers=self.headers(data=data, access_token=self.student.accessToken), data=data))
 		return response
 
 	async def get_student_performance(self, start_date: str = None, end_date: str = None):
-		#TODO: objects for this 
-		
-		if not start_date:
-			start_date = helpers.get_mounth()['start']
-		if not end_date:
-			end_date = helpers.get_mounth()['end']
-		data = dumps({
-			"start_date": start_date,
-			"end_date": end_date,
-			"student_id": self.student.student_id
-		})
-
-		response = objects.StudentPerformance(await helpers.post(f"{self.api}/schedule/student-performance", headers=self.headers(data=data, access_token=self.student.access_token), data=data))
-		return response
-
-
-	async def get_subject_performance(self, subject_id: int, start_date: str = None, end_date: str = None):
-		#TODO: objects for this 
-		if not start_date:
-			start_date = helpers.get_mounth()['start']
-		if not end_date:
-			end_date = helpers.get_mounth()['end']
 
 		data = dumps({
-			"start_date": start_date,
-			"end_date": end_date,
-			"student_id": self.student.student_id,
-			"subject_id": subject_id
+			"start_date": start_date if start_date else helpers.get_mounth()['start'],
+			"end_date": end_date if end_date else helpers.get_mounth()['end'],
+			"student_id": self.student.studentId
 		})
 
-		response = LessonPerformance(await helpers.post(f"{self.api}/schedule/subject-grades", headers=self.headers(data=data, access_token=self.student.access_token), data=data))
+		response = objects.StudentPerformance(await helpers.post(f"{self.api}/schedule/student-performance", headers=self.headers(data=data, access_token=self.student.accessToken), data=data))
 		return response
 
 
-	async def delete_hometask_file(self, file_id):
-		#TODO: objects for this 
+	async def get_subject_performance(self, subjectId: int, start_date: str = None, end_date: str = None):
 
-		data = dumps({"file_id": file_id})
-		response = await helpers.post(f"{self.api}/schedule/delete-hometask-file", headers=self.headers(data=data, access_token=self.student.access_token), data=data)
+		data = dumps({
+			"start_date": start_date if start_date else helpers.get_mounth()['start'],
+			"end_date": end_date if end_date else helpers.get_mounth()['end'],
+			"student_id": self.student.studentId,
+			"subject_id": subjectId
+		})
+
+		response = objects.LessonPerformance(await helpers.post(f"{self.api}/schedule/subject-grades", headers=self.headers(data=data, access_token=self.student.accessToken), data=data))
 		return response
 
-	async def load_hometask_file(self, file: AsyncBufferedReader):
-		#TODO THIS
+
+	async def delete_hometask_file(self, fileId):
+
+		data = dumps({"file_id": fileId})
+		response = await helpers.post(f"{self.api}/schedule/delete-hometask-file", headers=self.headers(data=data, access_token=self.student.accessToken), data=data)
+		return response
+
+	async def load_hometask_file(self, file: AsyncBufferedReader): #TODO THIS
 		pass
