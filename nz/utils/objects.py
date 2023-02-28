@@ -1,85 +1,105 @@
+#thanks for improving objects.py -> https://github.com/GoldMasterPro
+
+__all__ = ['Student', 'Schedule', 'Hometask', 'Timetable', 'StudentPerformance', 'LessonPerformance']
 
 
 class Student:
-	def __init__(self, data = None):
+	def __init__(self, data: dict = {}):
 		self.json = data
-		try:self.access_token = self.json['access_token']
-		except:self.access_token = None
-		try:self.refresh_token = self.json['refresh_token']
-		except:self.refresh_token = None
-		try:self.email_hash = self.json['email_hash']
-		except:self.email_hash = None
-		try:self.student_id = self.json['student_id']
-		except:self.student_id = None
-		try:self.fio = self.json['FIO']
-		except:self.fio = None
-		try:self.avatar = self.json['avatar']
-		except:self.avatar = None
-		try:self.permissions = self.json['permissions']
-		except:self.permissions = None
-		try:self.error_message = self.json['error_message']
-		except:self.error_message = None
-
+		self.access_token = self.json.get('access_token', None)
+		self.refresh_token = self.json.get('refresh_token', None)
+		self.email_hash = self.json.get('email_hash', None)
+		self.student_id = self.json.get('student_id', None)
+		self.fio = self.json.get('FIO', None)
+		self.avatar = self.json.get('avatar', None)
+		self.permissions = self.json.get('permissions', None)
+		self.error_message = self.json.get('error_message', None)
 
 
 class Schedule:
-	def __init__(self, data = None):
+	def __init__(self, data: dict = {}):
 		self.json = data
 		self.days = []
-		try:self.error_message = self.json['error_message']
-		except:self.error_message = None
-		try:
-			for dt in self.json['dates']:
-				self.days.append(self.Day(dt))
-		except:
-			pass
+		self.error_message = self.json.get('error_message', None)
+		for date in self.json.get('dates', []):
+			self.days.append(self.Day(date))
 
 
 	class Day:
-		def __init__(self, data):
+		def __init__(self, data: dict = {}):
 			self.json = data
-			try:self.date = self.json['date']
-			except:self.date = None
-			self.schoolSubjects = []
-			try:
-				for schoolSubject in self.json['calls']:
-					self.schoolSubjects.append(self.SchoolSubject(schoolSubject))
-			except:
-				pass
+			self.date = self.json.get('date', None)
+			self.lessons = []
+			for call in self.json.get('calls', []):
+				self.lessons.append(self.Lesson(call))
+			self.schoolSubjects = self.lessons # Обратная совместимость
 
 
-		class SchoolSubject:
-			def __init__(self, data):
+		class Lesson:
+			def __init__(self, data: dict = {}):
 				self.json = data
-				try:self.subjects = self.json['subjects']
-				except:self.subjects = None
-				try:self.subject_name = self.subjects[0]['subject_name']
-				except:self.subject_name = None
-				try:self.room = self.subjects[0]['room']
-				except:self.room = None
-				try:self.call_id = self.json['call_id']
-				except:self.call_id = None
-				try:self.number = self.json['call_number']
-				except:self.number = None
-				try:self.hometask = self.subjects[0]['hometask']
-				except:self.hometask = None
-				try:self.distance_hometask_id = self.subjects[0]['distance_hometask_id']
-				except:self.distance_hometask_id = None
-				try:self.distance_hometask_is_closed = self.subjects[0]['distance_hometask_is_closed']
-				except:self.distance_hometask_is_closed = None
+				self.callId = self.json.get('call_id', None)
+				self.number = self.json.get('call_number', None)
 
+				subjects = self.json.get('subjects', [])
+				subject = subjects[0] if subjects else {}
+
+				self.subject_name = subject.get('subject_name', None)
+				self.room = subject.get('room', None)
+				self.distance_hometask_id = subject.get('distance_hometask_id', None)
+				self.distance_hometask_is_closed = subject.get('distance_hometask_is_closed', None)
+				self.hometask: list = subject.get('hometask', None)
+
+				lesson = subject.get('lesson', [])
+				lesson = lesson[0] if lesson else {}
+
+				self.type = lesson.get('type', None)
+				self.mark = lesson.get('mark', None)
+				self.comment = lesson.get('comment', None)
 
 
 class Hometask:
-	def __init__(self, data):
+	def __init__(self, data: dict = {}):
 		self.json = data
-		try:self.hometask = self.json['hometask']
-		except:self.hometask = None
-		try:self.answer = self.json['answer']
-		except:self.answer = None
-		try:self.answer_files = self.json['answer_files']
-		except:self.answer_files = None
-		try:self.is_closed = self.json['is_closed']
-		except:self.is_closed = None
-		try:self.error_message = self.json['error_message']
-		except:self.error_message = None
+		self.hometask = self.json.get('hometask', None)
+		self.answer = self.json.get('answer', None)
+		self.answer_files = self.json.get('answer_files', None)
+		self.is_closed = self.json.get('is_closed', None)
+		self.error_message = self.json.get('error_message', None)
+
+
+#new objects
+class Timetable:
+	def __init__(self, data: dict = {}):
+		self.json = data
+		#TODO THIS
+
+
+
+
+class StudentPerformance:
+	def __init__(self, data: dict = {}):
+		self.json = data
+
+		missed = self.json.get('missed', None)
+
+		self.missedDays = missed.get('days', None)
+		self.missedLessons = missed.get('lessons', None)
+		self.error_message = self.json.get('error_message', None)
+		self.subjects = list()
+		for subject in self.json.get('subjects', []):
+			self.subjects.append(self.Subjects(subject))
+
+	class Subjects:
+		def __init__(self, data: dict = {}):
+			self.subjectId = data.get('subject_id', None)
+			self.subjectName = data.get('subject_name', None)
+			self.marks = data.get('marks', [])
+
+
+
+
+class LessonPerformance:
+	def __init__(self, data: dict = {}):
+		self.json = data
+		#TODO THIS

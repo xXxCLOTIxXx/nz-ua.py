@@ -10,7 +10,7 @@ __title__ = 'nz-ua.py'
 __author__ = 'Xsarz'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2023 Xsarz'
-__version__ = '1.1'
+__version__ = '1.1.4'
 __newest__ = loads(get("https://pypi.org/pypi/nz-ua.py/json").text)["info"]["version"]
 
 

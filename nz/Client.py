@@ -57,24 +57,32 @@ class Client(Headers):
 			"student_id": self.student.student_id
 		})
 
-		response = await helpers.post(f"{self.api}/schedule/diary", headers=self.headers(data=data, access_token=self.student.access_token), data=data)
+		response = objects.Timetable(await helpers.post(f"{self.api}/schedule/diary", headers=self.headers(data=data, access_token=self.student.access_token), data=data))
 		return response
 
-	async def get_student_performance(self, start_date: str = "2023-02-13", end_date: str = "2023-02-19"):
+	async def get_student_performance(self, start_date: str = None, end_date: str = None):
 		#TODO: objects for this 
-
+		
+		if not start_date:
+			start_date = helpers.get_mounth()['start']
+		if not end_date:
+			end_date = helpers.get_mounth()['end']
 		data = dumps({
 			"start_date": start_date,
 			"end_date": end_date,
 			"student_id": self.student.student_id
 		})
 
-		response = await helpers.post(f"{self.api}/schedule/student-performance", headers=self.headers(data=data, access_token=self.student.access_token), data=data)
+		response = objects.StudentPerformance(await helpers.post(f"{self.api}/schedule/student-performance", headers=self.headers(data=data, access_token=self.student.access_token), data=data))
 		return response
 
 
-	async def get_subject_performance(self, subject_id: int, start_date: str = "2023-02-13", end_date: str = "2023-02-19"):
+	async def get_subject_performance(self, subject_id: int, start_date: str = None, end_date: str = None):
 		#TODO: objects for this 
+		if not start_date:
+			start_date = helpers.get_mounth()['start']
+		if not end_date:
+			end_date = helpers.get_mounth()['end']
 
 		data = dumps({
 			"start_date": start_date,
@@ -83,7 +91,7 @@ class Client(Headers):
 			"subject_id": subject_id
 		})
 
-		response = await helpers.post(f"{self.api}/schedule/subject-grades", headers=self.headers(data=data, access_token=self.student.access_token), data=data)
+		response = LessonPerformance(await helpers.post(f"{self.api}/schedule/subject-grades", headers=self.headers(data=data, access_token=self.student.access_token), data=data))
 		return response
 
 
