@@ -4,7 +4,7 @@ with open("README.md", "r") as file:
 	long_description = file.read()
 
 link = 'https://github.com/xXxCLOTIxXx/nz-ua.py/archive/refs/heads/main.zip'
-ver = '1.1.4'
+ver = '1.1.5'
 
 setup(
 	name = "nz-ua.py",
@@ -33,7 +33,8 @@ setup(
 	install_requires = [
 		"colored",
 		"aiohttp",
-		"requests"
+		"requests",
+		"aiofiles"
 	],
 	packages = find_packages()
 )
