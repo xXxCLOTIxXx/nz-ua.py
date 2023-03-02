@@ -58,7 +58,7 @@ class Client(Headers):
 			"student_id": self.student.studentId
 		})
 
-		response = objects.Timetable(await helpers.post(f"{self.api}/schedule/diary", headers=self.headers(data=data, access_token=self.student.accessToken), data=data))
+		response = objects.Timetable(await helpers.post(f"{self.api}/schedule/timetable", headers=self.headers(data=data, access_token=self.student.accessToken), data=data))
 		return response
 
 	async def get_student_performance(self, start_date: str = None, end_date: str = None):
