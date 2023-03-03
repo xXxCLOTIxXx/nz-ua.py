@@ -18,9 +18,3 @@ class Headers:
 
 
 		return headers
-
-	def web_headers(self):
-
-		headers = {}
-
-		return headers

@@ -1,6 +1,6 @@
 #thanks for improving objects.py -> https://github.com/GoldMasterPro
 
-__all__ = ['Student', 'Schedule', 'Hometask', 'Timetable', 'StudentPerformance', 'LessonPerformance']
+__all__ = ['Student', 'Schedule', 'Hometask', 'Timetable', 'StudentPerformance', 'LessonPerformance', 'LoadHometask']
 
 
 class Student:
@@ -19,7 +19,7 @@ class Student:
 class Schedule:
 	def __init__(self, data: dict = {}):
 		self.json = data
-		self.days = []
+		self.days = list()
 		self.error_message = self.json.get('error_message', None)
 		for date in self.json.get('dates', []):
 			self.days.append(self.Day(date))
@@ -29,7 +29,7 @@ class Schedule:
 		def __init__(self, data: dict = {}):
 			self.json = data
 			self.date = self.json.get('date', None)
-			self.lessons = []
+			self.lessons = list()
 			for call in self.json.get('calls', []):
 				self.lessons.append(self.Lesson(call))
 			self.schoolSubjects = self.lessons # Обратная совместимость
@@ -159,3 +159,18 @@ class LessonPerformance:
 		self.missedLessons = self.json.get('number_missed_lessons', None)
 		self.lessons = self.json.get('lessons', None)
 		self.error_message = self.json.get('error_message', None)
+
+class LoadHometask:
+	def __init__(self, data: dict = {}):
+		self.json = data
+		self.error_message = self.json.get('error_message', None)
+		self.answer = self.json.get('answer', None)
+		self.files = list()
+		for file in self.json.get('answer_files', []):
+			self.files.append(Files(file))
+
+	class Files:
+		def __init__(self, data: dict = {}):
+			self.json = data
+			self.fileId = self.json.get('id', None)
+			self.fileName =self.json.get('name', None)
