@@ -7,7 +7,7 @@ class LoadHometask:
 
         self.answer = self.json.get("answer", None)
         self.files = list()
-        self.error_message = self.json.get("error_message")
+        self.error_message = self.json.get("error_message", "")
 
         for file in self.json.get("answer_files", []):
             self.files.append(File(file))

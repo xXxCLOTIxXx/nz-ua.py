@@ -1,6 +1,4 @@
-__all__ = [
-    "SubjectsPerformance"
-]
+__all__ = ["SubjectsPerformance"]
 
 
 class SubjectsPerformance:

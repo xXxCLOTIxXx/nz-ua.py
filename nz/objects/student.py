@@ -1,6 +1,4 @@
-__all__ = [
-    "Student"
-]
+__all__ = ["Student"]
 
 
 class Student:
@@ -14,4 +12,4 @@ class Student:
         self.fio = self.json.get("FIO")
         self.avatar = self.json.get("avatar")
         self.permissions = self.json.get("permissions")
-        self.error_message = self.json.get("error_message", '')
+        self.error_message = self.json.get("error_message", "")

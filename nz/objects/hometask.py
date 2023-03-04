@@ -1,6 +1,4 @@
-__all__ = [
-    "Hometask"
-]
+__all__ = ["Hometask"]
 
 
 class Hometask:

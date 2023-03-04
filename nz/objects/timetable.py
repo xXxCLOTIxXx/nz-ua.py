@@ -1,6 +1,4 @@
-__all__ = [
-    "Timetable"
-]
+__all__ = ["Timetable"]
 
 
 class Timetable:

@@ -1,6 +1,4 @@
-__all__ = [
-    "Schedule"
-]
+__all__ = ["Schedule"]
 
 
 class Schedule:
@@ -40,8 +38,7 @@ class Lesson:
         self.name = subject.get("subject_name")
         self.room = subject.get("room")
         self.hometask_id = subject.get("distance_hometask_id")
-        self.hometask_is_closed = subject.get(
-            "distance_hometask_is_closed")
+        self.hometask_is_closed = subject.get("distance_hometask_is_closed")
         self.hometask: list = subject.get("hometask")
         self.type = lesson.get("type")
         self.mark = lesson.get("mark")
