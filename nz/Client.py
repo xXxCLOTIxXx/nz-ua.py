@@ -1,3 +1,5 @@
+import asyncio
+
 from json import dumps, loads
 from .utils import exceptions, helpers
 from .utils.headers import Headers
@@ -26,6 +28,14 @@ class Client(Headers):
 		self.student = objects.Student()
 		return self.student
 
+	def run(self, username: str, password: str):
+		async def runner():
+			await self.login(username=username, password=password)
+
+		try:
+			asyncio.run(runner())
+		except KeyboardInterrupt:
+			return
 
 	async def get_schedule(self, start_date: str = None, end_date: str = None):
 
