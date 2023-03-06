@@ -3,7 +3,7 @@ import asyncio
 from json import dumps, loads
 from .utils import exceptions, helpers
 from .utils.headers import Headers
-import objects
+from . import objects
 
 class Client(Headers):
 	def __init__(self, profile: objects.Student = None):
