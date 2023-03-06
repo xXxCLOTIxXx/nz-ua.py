@@ -1,6 +1,9 @@
+import asyncio
+
 from json import dumps, loads
-from .utils import exceptions, helpers, objects
+from .utils import exceptions, helpers
 from .utils.headers import Headers
+import objects
 
 class Client(Headers):
 	def __init__(self, profile: objects.Student = None):
@@ -25,6 +28,14 @@ class Client(Headers):
 		self.student = objects.Student()
 		return self.student
 
+	def run(self, username: str, password: str):
+		async def runner():
+			await self.login(username=username, password=password)
+
+		try:
+			asyncio.run(runner())
+		except KeyboardInterrupt:
+			return
 
 	async def get_schedule(self, start_date: str = None, end_date: str = None):
 
@@ -80,7 +91,7 @@ class Client(Headers):
 			"subject_id": subjectId
 		})
 
-		response = objects.LessonPerformance(await helpers.post(f"{self.api}/schedule/subject-grades", headers=self.headers(data=data, access_token=self.student.accessToken), data=data))
+		response = objects.SubjectsPerformance(await helpers.post(f"{self.api}/schedule/subject-grades", headers=self.headers(data=data, access_token=self.student.accessToken), data=data))
 		return response
 
 
