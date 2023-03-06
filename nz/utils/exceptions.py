@@ -1,3 +1,6 @@
+from json import loads
+
+
 class UnknownError(Exception):
     pass
 
@@ -21,12 +24,15 @@ errors = {
 }
 
 
-def callException(json):
+def callException(data: str):
     try:
+        if data.find("Enable JavaScript and cookies to continue") != -1:
+            raise Unauthorized(data)
+        json = loads(data)
         code = json["error_message"]
-    except (TypeError, KeyError):
-        raise UnknownError(json)
+    except Exception:
+        raise UnknownError(data)
     if code in errors:
-        raise errors[code](json)
+        raise errors[code](code)
     else:
-        raise UnknownError(json)
+        raise UnknownError(data)
