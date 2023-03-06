@@ -1,5 +1,5 @@
 import aiohttp
-from . import exceptions, objects
+from . import exceptions
 from json import loads
 from datetime import datetime, date
 
