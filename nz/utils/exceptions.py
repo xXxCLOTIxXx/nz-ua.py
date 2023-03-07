@@ -1,36 +1,36 @@
 from json import loads
 
+
 class UnknownError(Exception):
-	def __init__(*args, **kwargs):
-		Exception.__init__(*args, **kwargs)
+    pass
+
 
 class IncorrectPassword(Exception):
-	def __init__(*args, **kwargs):
-		Exception.__init__(*args, **kwargs)
+    pass
 
 
 class IncorrectNickname(Exception):
-	def __init__(*args, **kwargs):
-		Exception.__init__(*args, **kwargs)
+    pass
+
 
 class Unauthorized(Exception):
-	def __init__(*args, **kwargs):
-		Exception.__init__(*args, **kwargs)
+    pass
 
 
 errors = {
-	'Введено невірний логін або пароль.': IncorrectPassword,
-	'Користувач не знайдений.': IncorrectNickname,
-	0:Unauthorized,
+    "Введено невірний логін або пароль.": IncorrectPassword,
+    "Користувач не знайдений.": IncorrectNickname,
+    0: Unauthorized,
 }
 
-def CheckException(data):
-	try:
-		data = loads(data)
-		try:code = data['code']
-		except KeyError:
-			code = data['error_message']
-	except:
-		raise UnknownError(data)
-	if code in errors: raise errors[code](data)
-	else:raise UnknownError(data)
+
+def callException(data: str):
+    try:
+        json = loads(data)
+        code = json["error_message"]
+    except Exception:
+        raise UnknownError(data)
+    if code in errors:
+        raise errors[code](code)
+    else:
+        raise UnknownError(data)
