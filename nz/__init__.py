@@ -1,5 +1,5 @@
 from .Client import Client
-from .utils import exceptions, helpers, headers
+from .utils import exceptions, helpers
 
 from os import system as s
 from colored import fore

@@ -1,3 +1,12 @@
+__all__ = [
+    "UnknownError",
+    "IncorrectPassword",
+    "IncorrectNickname",
+    "Unauthorized",
+    "callException",
+]
+
+
 class UnknownError(Exception):
     pass
 

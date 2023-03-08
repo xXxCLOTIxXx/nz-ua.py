@@ -69,8 +69,3 @@ def get_week():
 		endMounth = f'0{endMounth}'
 
 	return {'start': f'{startYear}-{startMounth}-{startDay}', 'end': f'{endYear}-{endMounth}-{endDay}'}
-
-async def post(url: str, headers, data = None):
-	async with aiohttp.ClientSession() as session:
-		async with session.post(url, headers=headers, data=data) as response:
-			return exceptions.callException(await response.text()) if response.status != 200 else loads(await response.text())
