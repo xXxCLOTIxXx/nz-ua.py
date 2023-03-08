@@ -1,6 +1,3 @@
-from json import loads
-
-
 class UnknownError(Exception):
     pass
 
@@ -20,19 +17,19 @@ class Unauthorized(Exception):
 errors = {
     "Введено невірний логін або пароль.": IncorrectPassword,
     "Користувач не знайдений.": IncorrectNickname,
-    0: Unauthorized,
+    "Your request was made with invalid credentials.": Unauthorized,
 }
 
 
-def callException(data: str):
+def callException(json: dict):
     try:
-        if data.find("Enable JavaScript and cookies to continue") != -1:
-            raise Unauthorized(data)
-        json = loads(data)
-        code = json["error_message"]
+        if "message" in json:
+            code = json["message"]
+        else:
+            code = json["error_message"]
     except Exception:
-        raise UnknownError(data)
+        raise UnknownError(json)
     if code in errors:
         raise errors[code](code)
     else:
-        raise UnknownError(data)
+        raise UnknownError(json)
