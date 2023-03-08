@@ -26,13 +26,16 @@ class Unauthorized(Exception):
 errors = {
     "Введено невірний логін або пароль.": IncorrectPassword,
     "Користувач не знайдений.": IncorrectNickname,
-    0: Unauthorized,
+    "Your request was made with invalid credentials.": Unauthorized,
 }
 
 
 def callException(json: dict):
     try:
-        code = json["error_message"]
+        if "message" in json:
+            code = json["message"]
+        else:
+            code = json["error_message"]
     except Exception:
         raise UnknownError(json)
     if code in errors:
