@@ -16,7 +16,8 @@ class HttpClient:
         }
         if headers:
             self.headers.update(headers)
-        self.session = ClientSession(base_url)
+        self.base_url = base_url
+        self._session = None
 
     @property
     def token(self):
@@ -26,8 +27,15 @@ class HttpClient:
     def token(self, token):
         self.headers.update({"Authorization": token})
 
+    @property
+    def session(self):
+        if not self._session:
+            self._session = ClientSession(self.base_url)
+        return self._session
+
     async def close(self):
-        await self.session.close()
+        if self._session:
+            await self._session.close()
 
     async def post(self, url: str, data: dict | None = None):
         async with self.session.post(url, headers=self.headers, json=data) as response:
