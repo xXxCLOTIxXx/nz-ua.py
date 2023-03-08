@@ -1,3 +1,5 @@
+import asyncio
+
 from json import dumps, loads
 from .utils import exceptions, helpers
 from .utils.http_client import HttpClient
@@ -25,6 +27,7 @@ class Client:
 
 	async def close(self):
 		await self.http.close()
+		await asyncio.sleep(0)
 
 	async def get_schedule(self, start_date: str = None, end_date: str = None):
 		data = {

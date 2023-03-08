@@ -25,7 +25,7 @@ class HttpClient:
 
     @token.setter
     def token(self, token):
-        self.headers.update({"Authorization": token})
+        self.headers.update({"Authorization": f"Bearer {token}"})
 
     @property
     def session(self):
