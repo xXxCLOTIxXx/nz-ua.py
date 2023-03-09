@@ -33,12 +33,6 @@ class Client:
         data = {"start_date": str(start_date), "end_date": str(end_date)}
         return objects.Schedule(await self.http.post("/v1/schedule/diary", data))
 
-    async def get_hometask(self, hometask_id: int | str) -> objects.Hometask:
-        data = {"distance_hometask_id": hometask_id}
-        return objects.Hometask(
-            await self.http.post("/v1/schedule/distance-hometask", data)
-        )
-
     async def get_timetable(
         self,
         start_date: str | date = date.today().replace(day=1),
@@ -59,7 +53,7 @@ class Client:
 
     async def get_subject_performance(
         self,
-        subject_id: int,
+        subject_id: int | str,
         start_date: str | date = date.today().replace(day=1),
         end_date: str | date = date.today(),
     ) -> objects.SubjectsPerformance:
@@ -72,6 +66,13 @@ class Client:
             await self.http.post("/v1/schedule/subject-grades", data)
         )
 
-    async def delete_hometask_file(self, hometask_id):
+    async def get_hometask(self, hometask_id: int | str) -> objects.Hometask:
+        data = {"distance_hometask_id": hometask_id}
+        return objects.Hometask(
+            await self.http.post("/v1/schedule/distance-hometask", data)
+        )
+
+    async def delete_hometask_file(self, hometask_id: int | str) -> True | False:
         data = {"file_id": hometask_id}
-        return await self.http.post("/v1/schedule/delete-hometask-file", data)
+        response = await self.http.post("/v1/schedule/delete-hometask-file", data)
+        return response.get("status") == "success"
