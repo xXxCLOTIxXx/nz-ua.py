@@ -1,13 +1,20 @@
 __all__ = [
-    "UnknownError",
-    "IncorrectPassword",
     "IncorrectNickname",
+    "IncorrectPassword",
+
+    "HometaskNotFound",
+    "HometaskFileNotFound",
+
+    "ServiceUnavailable",
+    "ConnectionTimedOut",
     "Unauthorized",
-    "callException",
+    "InternalServerError",
+
+    "UnknownError",
 ]
 
 
-class UnknownError(Exception):
+class IncorrectNickname(Exception):
     pass
 
 
@@ -15,30 +22,31 @@ class IncorrectPassword(Exception):
     pass
 
 
-class IncorrectNickname(Exception):
+class HometaskFileNotFound(Exception):
+    pass
+
+
+class HometaskNotFound(Exception):
+    pass
+
+
+class ServiceUnavailable(Exception):
+    def __init__(self) -> None:
+        super().__init__("No server is available to handle this request.")
+
+
+class ConnectionTimedOut(Exception):
     pass
 
 
 class Unauthorized(Exception):
+    def __init__(self) -> None:
+        super().__init__("Your request was made with invalid credentials. You need to call the login method.")
+
+
+class InternalServerError(Exception):
     pass
 
 
-errors = {
-    "Введено невірний логін або пароль.": IncorrectPassword,
-    "Користувач не знайдений.": IncorrectNickname,
-    "Your request was made with invalid credentials.": Unauthorized,
-}
-
-
-def callException(json: dict):
-    try:
-        if "message" in json:
-            code = json["message"]
-        else:
-            code = json["error_message"]
-    except Exception:
-        raise UnknownError(json)
-    if code in errors:
-        raise errors[code](code)
-    else:
-        raise UnknownError(json)
+class UnknownError(Exception):
+    pass

@@ -2,28 +2,34 @@ import asyncio
 from datetime import date
 
 from .utils.http_client import HttpClient
+from .utils.exceptions import (
+    IncorrectNickname,
+    IncorrectPassword,
+    HometaskNotFound,
+    HometaskFileNotFound,
+    UnknownError,
+)
 from . import objects
 
 
 class Client:
-    def __init__(
-        self,
-        profile: objects.Student = objects.Student(),
-        headers: dict | None = None,
-        base_url: str = "https://api-mobile.nz.ua",
-    ) -> None:
-        self.http = HttpClient(headers=headers, base_url=base_url)
-        self.student = profile
+    def __init__(self, token: str | None = None, **http_options) -> None:
+        self._http = HttpClient(token, **http_options)
 
     async def login(self, username: str, password: str) -> objects.Student:
         data = {"username": username, "password": password}
-        self.student = objects.Student(await self.http.post("/v1/user/login", data))
-        self.http.token = self.student.access_token
-        return self.student
-
-    async def close(self) -> None:
-        await self.http.close()
-        await asyncio.sleep(0)
+        response: dict = await self._http.post("/v1/user/login", data)
+        match response.get("error_message"):
+            case "":
+                student = objects.Student(response)
+                self._http.token = student.access_token
+                return student
+            case "Користувач не знайдений.":
+                raise IncorrectNickname
+            case "Введено невірний логін або пароль.":
+                raise IncorrectPassword
+            case _:
+                raise UnknownError(response)
 
     async def get_schedule(
         self,
@@ -31,7 +37,12 @@ class Client:
         end_date: str | date = date.today(),
     ) -> objects.Schedule:
         data = {"start_date": str(start_date), "end_date": str(end_date)}
-        return objects.Schedule(await self.http.post("/v1/schedule/diary", data))
+        response: dict = await self._http.post("/v1/schedule/diary", data)
+        match response.get("error_message"):
+            case "":
+                return objects.Schedule(response)
+            case _:
+                raise UnknownError(response)
 
     async def get_timetable(
         self,
@@ -39,7 +50,12 @@ class Client:
         end_date: str | date = date.today(),
     ) -> objects.Timetable:
         data = {"start_date": str(start_date), "end_date": str(end_date)}
-        return objects.Timetable(await self.http.post("/v1/schedule/timetable", data))
+        response: dict = await self._http.post("/v1/schedule/timetable", data)
+        match response.get("error_message"):
+            case "":
+                return objects.Timetable(response)
+            case _:
+                raise UnknownError(response)
 
     async def get_student_performance(
         self,
@@ -47,9 +63,12 @@ class Client:
         end_date: str | date = date.today(),
     ) -> objects.StudentPerformance:
         data = {"start_date": str(start_date), "end_date": str(end_date)}
-        return objects.StudentPerformance(
-            await self.http.post("/v1/schedule/student-performance", data)
-        )
+        response: dict = await self._http.post("/v1/schedule/student-performance", data)
+        match response.get("error_message"):
+            case "":
+                return objects.StudentPerformance(response)
+            case _:
+                raise UnknownError(response)
 
     async def get_subject_performance(
         self,
@@ -62,17 +81,40 @@ class Client:
             "end_date": str(end_date),
             "subject_id": subject_id,
         }
-        return objects.SubjectsPerformance(
-            await self.http.post("/v1/schedule/subject-grades", data)
-        )
+        response: dict = await self._http.post("/v1/schedule/subject-grades", data)
+        match response.get("error_message"):
+            case "":
+                return objects.SubjectsPerformance(response)
+            case _:
+                raise UnknownError(response)
 
     async def get_hometask(self, hometask_id: int | str) -> objects.Hometask:
+        if hometask_id in (0, "0"):
+            raise ValueError
         data = {"distance_hometask_id": hometask_id}
-        return objects.Hometask(
-            await self.http.post("/v1/schedule/distance-hometask", data)
-        )
+        response: dict = await self._http.post("/v1/schedule/distance-hometask", data)
+        match response.get("error_message"):
+            case "":
+                return objects.Hometask(response)
+            case "Завдання не знайдене":
+                raise HometaskNotFound
+            case _:
+                raise UnknownError(response)
 
-    async def delete_hometask_file(self, hometask_id: int | str) -> True | False:
+    async def delete_hometask_file(self, hometask_id: int | str) -> None:
+        if hometask_id in (0, "0"):
+            raise ValueError
         data = {"file_id": hometask_id}
-        response = await self.http.post("/v1/schedule/delete-hometask-file", data)
-        return response.get("status") == "success"
+        response: dict = await self._http.post(
+            "/v1/schedule/delete-hometask-file", data
+        )
+        match response.get("status"):
+            case "success":
+                return
+            case 404:
+                raise HometaskFileNotFound
+            case _:
+                raise UnknownError(response)
+
+    def __del__(self) -> None:
+        asyncio.run(self._http.close())

@@ -1,10 +1,20 @@
-from aiohttp import ClientSession, ContentTypeError
-from .exceptions import callException, UnknownError
+from aiohttp import ClientSession
+from .exceptions import (
+    ServiceUnavailable,
+    ConnectionTimedOut,
+    Unauthorized,
+    InternalServerError,
+    UnknownError,
+)
 
 
 class HttpClient:
     def __init__(
-        self, /, headers: dict | None = None, base_url: str | None = None
+        self,
+        /,
+        token: str | None = None,
+        headers: dict = {},
+        base_url: str | None = None,
     ) -> None:
         self.headers: dict = {
             "Content-Type": "application/json",
@@ -14,10 +24,10 @@ class HttpClient:
             "Connection": "Keep-Alive",
             "Accept-Encoding": "gzip",
         }
-        if headers:
-            self.headers.update(headers)
-        self.base_url = base_url
-        self._session = None
+        self.base_url = base_url or "https://api-mobile.nz.ua"
+        self.headers.update(headers)
+        self.token = token
+        self._client_session = None
 
     @property
     def token(self):
@@ -25,24 +35,34 @@ class HttpClient:
 
     @token.setter
     def token(self, token):
-        self.headers.update({"Authorization": f"Bearer {token}"})
+        if token is not None:
+            self.headers.update({"Authorization": f"Bearer {token}"})
 
     @property
-    def session(self):
+    def _session(self):
         if not self._session:
-            self._session = ClientSession(self.base_url)
+            self._client_session = ClientSession(self.base_url)
         return self._session
+
+    async def post(self, url: str, data: dict | None = None):
+        async with self._session.post(url, headers=self.headers, json=data) as response:
+            match response.status:
+                case 200:
+                    return await response.json()
+                case 401:
+                    raise Unauthorized
+                case 500:
+                    json: dict = await response.json()
+                    if json.get("name") == "Internal Server Error":
+                        raise InternalServerError
+                    return json
+                case 503:
+                    raise ServiceUnavailable
+                case 522:
+                    raise ConnectionTimedOut
+                case _:
+                    raise UnknownError(await response.text())
 
     async def close(self):
         if self._session:
             await self._session.close()
-
-    async def post(self, url: str, data: dict | None = None):
-        async with self.session.post(url, headers=self.headers, json=data) as response:
-            try:
-                json = await response.json()
-            except ContentTypeError:
-                raise UnknownError(await response.text())
-            if response.status != 200:
-                callException(json)
-            return json

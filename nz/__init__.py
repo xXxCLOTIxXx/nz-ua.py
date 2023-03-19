@@ -1,4 +1,4 @@
-from .Client import Client
+from .client import Client
 from .utils import exceptions
 
 from os import system as s

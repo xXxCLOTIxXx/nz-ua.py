@@ -6,7 +6,6 @@ class Timetable:
         self.json = data
 
         self.days = list()
-        self.error_message = self.json.get("error_message", "")
 
         for date in self.json.get("dates", []):
             self.days.append(Day(date))

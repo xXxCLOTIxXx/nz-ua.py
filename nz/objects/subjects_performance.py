@@ -7,7 +7,6 @@ class SubjectsPerformance:
 
         self.missed_lessons = self.json.get("number_missed_lessons")
         self.lessons = list()
-        self.error_message = self.json.get("error_message", "")
 
         for lesson in self.json.get("lessons", []):
             self.lessons.append(Lesson(lesson))

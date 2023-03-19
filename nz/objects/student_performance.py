@@ -10,7 +10,6 @@ class StudentPerformance:
         self.missed_days = missed.get("days")
         self.missed_lessons = missed.get("lessons")
         self.subjects = list()
-        self.error_message = self.json.get("error_message", "")
 
         for subject in self.json.get("subjects", []):
             self.subjects.append(Subject(subject))
