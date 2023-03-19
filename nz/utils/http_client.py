@@ -40,9 +40,9 @@ class HttpClient:
 
     @property
     def _session(self):
-        if not self._session:
+        if not self._client_session:
             self._client_session = ClientSession(self.base_url)
-        return self._session
+        return self._client_session
 
     async def post(self, url: str, data: dict | None = None):
         async with self._session.post(url, headers=self.headers, json=data) as response:
