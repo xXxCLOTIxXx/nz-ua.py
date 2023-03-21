@@ -76,6 +76,8 @@ class Client:
         start_date: str | date = date.today().replace(day=1),
         end_date: str | date = date.today(),
     ) -> objects.SubjectsPerformance:
+        if subject_id in (0, "0") or not isinstance(subject_id, (int, str)):
+            raise ValueError("Id must be a number or a string. Id cannot be 0")
         data = {
             "start_date": str(start_date),
             "end_date": str(end_date),
@@ -89,8 +91,8 @@ class Client:
                 raise UnknownError(response)
 
     async def get_hometask(self, hometask_id: int | str) -> objects.Hometask:
-        if hometask_id in (0, "0"):
-            raise ValueError
+        if hometask_id in (0, "0") or not isinstance(hometask_id, (int, str)):
+            raise ValueError("Id must be a number or a string. Id cannot be 0")
         data = {"distance_hometask_id": hometask_id}
         response: dict = await self._http.post("/v1/schedule/distance-hometask", data)
         match response.get("error_message"):
@@ -102,8 +104,8 @@ class Client:
                 raise UnknownError(response)
 
     async def delete_hometask_file(self, hometask_id: int | str) -> None:
-        if hometask_id in (0, "0"):
-            raise ValueError
+        if hometask_id in (0, "0") or not isinstance(hometask_id, (int, str)):
+            raise ValueError("Id must be a number or a string. Id cannot be 0")
         data = {"file_id": hometask_id}
         response: dict = await self._http.post(
             "/v1/schedule/delete-hometask-file", data
