@@ -1,5 +1,5 @@
 from .client import Client
-from .utils import exceptions
+import errors
 
 from os import system as s
 from colored import fore

@@ -1,15 +1,15 @@
 import asyncio
 from datetime import date
 
-from .utils.http_client import HttpClient
-from .utils.exceptions import (
+from .http import HttpClient
+from . import objects
+from .errors import (
     IncorrectNickname,
     IncorrectPassword,
     HometaskNotFound,
     HometaskFileNotFound,
     UnknownError,
 )
-from . import objects
 
 
 class Client:

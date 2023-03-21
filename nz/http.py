@@ -1,5 +1,6 @@
 from aiohttp import ClientSession
-from .exceptions import (
+
+from .errors import (
     ServiceUnavailable,
     ConnectionTimedOut,
     Unauthorized,
