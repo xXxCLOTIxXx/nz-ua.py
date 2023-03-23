@@ -1,19 +1,9 @@
 from .client import Client
-import errors
+from . import errors
 
-from os import system as s
-from colored import fore
-from json import loads
-from requests import get
-
-__title__ = 'nz-ua.py'
-__author__ = 'Xsarz'
-__license__ = 'MIT'
-__copyright__ = 'Copyright 2023 Xsarz'
-__version__ = '1.1.5.3'
-__newest__ = loads(get("https://pypi.org/pypi/nz-ua.py/json").text)["info"]["version"]
-
-
-if __version__ != __newest__:
-	s('cls || clear')
-	print(fore.ORANGE_1, f'{__title__} made by {__author__}\nPlease update the library. Your version: {__version__}  A new version:{__newest__}', fore.WHITE)
+__title__ = "nz-ua"
+__version__ = "2.0"
+__description__ = "Library for working with the nz.ua service"
+__author__ = "GoldMasterPro"
+__license__ = "MIT"
+__copyright__ = "Copyright 2022 - 2023 Xsarz and 2023-present GoldMasterPro"

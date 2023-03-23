@@ -33,7 +33,8 @@ setup(
 	install_requires = [
 		"colored",
 		"aiohttp",
-		"requests"
+		"requests",
+		"pydantic"
 	],
 	packages = find_packages()
 )

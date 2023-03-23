@@ -1,4 +1,4 @@
-from aiohttp import ClientSession
+from aiohttp import ClientSession, ClientConnectorError
 
 from .errors import (
     ServiceUnavailable,
@@ -46,23 +46,30 @@ class HttpClient:
         return self._client_session
 
     async def post(self, url: str, data: dict | None = None):
-        async with self._session.post(url, headers=self.headers, json=data) as response:
-            match response.status:
-                case 200:
-                    return await response.json()
-                case 401:
-                    raise Unauthorized
-                case 500:
-                    json: dict = await response.json()
-                    if json.get("name") == "Internal Server Error":
-                        raise InternalServerError
-                    return json
-                case 503:
-                    raise ServiceUnavailable
-                case 522:
-                    raise ConnectionTimedOut
-                case _:
-                    raise UnknownError(await response.text())
+        try:
+            async with self._session.post(
+                url, headers=self.headers, json=data
+            ) as response:
+                match response.status:
+                    case 200:
+                        return await response.json()
+                    case 401:
+                        raise Unauthorized
+                    case 500:
+                        json: dict = await response.json()
+                        if json.get("name") == "Internal Server Error":
+                            raise InternalServerError
+                        return json
+                    case 503:
+                        raise ServiceUnavailable
+                    case 522:
+                        raise ConnectionTimedOut
+                    case _:
+                        raise UnknownError(await response.text())
+        except ClientConnectorError as error:
+            if error.errno == 22:
+                raise ConnectionTimedOut
+            raise error
 
     async def close(self):
         if self._session:

@@ -1,24 +1,27 @@
-__all__ = ["SubjectsPerformance"]
+from pydantic import BaseModel, Field
+from typing import Literal
+import datetime
+
+__all__ = ("SubjectsPerformance", )
 
 
-class SubjectsPerformance:
-    def __init__(self, data: dict = {}):
-        self.json = data
+class Lesson(BaseModel):
+    id: int = Field(alias="lesson_id")
+    name: str = Field(alias="subject")
+    date: datetime.date = Field(alias="lesson_date")
+    type: Literal[
+        "Поточна",
+        "Самостійна робота",
+        "Практична робота",
+        "Лабораторна робота",
+        "Контрольна робота",
+        "Тематична",
+        "Зошит"
+    ] | str = Field(alias="lesson_type")
+    mark: str
+    comment: str | None
 
-        self.missed_lessons = self.json.get("number_missed_lessons")
-        self.lessons = list()
 
-        for lesson in self.json.get("lessons", []):
-            self.lessons.append(Lesson(lesson))
-
-
-class Lesson:
-    def __init__(self, data: dict = {}):
-        self.json = data
-
-        self.id = self.json.get("lesson_id")
-        self.subject = self.json.get("subject")
-        self.date = self.json.get("lesson_date")
-        self.type = self.json.get("lesson_type")
-        self.mark = self.json.get("mark")
-        self.comment = self.json.get("comment")
+class SubjectsPerformance(BaseModel):
+    missed_lessons: int = Field(alias="number_missed_lessons")
+    lessons: tuple[Lesson, ...] = tuple()

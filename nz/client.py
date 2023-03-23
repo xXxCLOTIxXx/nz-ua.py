@@ -1,4 +1,3 @@
-import asyncio
 from datetime import date
 
 from .http import HttpClient
@@ -16,13 +15,19 @@ class Client:
     def __init__(self, token: str | None = None, **http_options) -> None:
         self._http = HttpClient(token, **http_options)
 
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, *_):
+        await self._http.close()
+
     async def login(self, username: str, password: str) -> objects.Student:
         data = {"username": username, "password": password}
         response: dict = await self._http.post("/v1/user/login", data)
         match response.get("error_message"):
             case "":
-                student = objects.Student(response)
-                self._http.token = student.access_token
+                student = objects.Student.parse_obj(response)
+                self._http.token = student.token
                 return student
             case "Користувач не знайдений.":
                 raise IncorrectNickname
@@ -40,7 +45,7 @@ class Client:
         response: dict = await self._http.post("/v1/schedule/diary", data)
         match response.get("error_message"):
             case "":
-                return objects.Schedule(response)
+                return objects.Schedule.parse_obj(response)
             case _:
                 raise UnknownError(response)
 
@@ -53,7 +58,7 @@ class Client:
         response: dict = await self._http.post("/v1/schedule/timetable", data)
         match response.get("error_message"):
             case "":
-                return objects.Timetable(response)
+                return objects.Timetable.parse_obj(response)
             case _:
                 raise UnknownError(response)
 
@@ -66,7 +71,7 @@ class Client:
         response: dict = await self._http.post("/v1/schedule/student-performance", data)
         match response.get("error_message"):
             case "":
-                return objects.StudentPerformance(response)
+                return objects.StudentPerformance.parse_obj(response)
             case _:
                 raise UnknownError(response)
 
@@ -86,7 +91,7 @@ class Client:
         response: dict = await self._http.post("/v1/schedule/subject-grades", data)
         match response.get("error_message"):
             case "":
-                return objects.SubjectsPerformance(response)
+                return objects.SubjectsPerformance.parse_obj(response)
             case _:
                 raise UnknownError(response)
 
@@ -97,13 +102,13 @@ class Client:
         response: dict = await self._http.post("/v1/schedule/distance-hometask", data)
         match response.get("error_message"):
             case "":
-                return objects.Hometask(response)
+                return objects.Hometask.parse_obj(response)
             case "Завдання не знайдене":
                 raise HometaskNotFound
             case _:
                 raise UnknownError(response)
 
-    async def delete_hometask_file(self, hometask_id: int | str) -> None:
+    async def delete_hometask_file(self, hometask_id: int | str) -> bool:
         if hometask_id in (0, "0") or not isinstance(hometask_id, (int, str)):
             raise ValueError("Id must be a number or a string. Id cannot be 0")
         data = {"file_id": hometask_id}
@@ -112,11 +117,11 @@ class Client:
         )
         match response.get("status"):
             case "success":
-                return
+                return True
             case 404:
                 raise HometaskFileNotFound
             case _:
                 raise UnknownError(response)
 
-    def __del__(self) -> None:
-        asyncio.run(self._http.close())
+    async def close(self):
+        await self._http.close()

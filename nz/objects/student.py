@@ -1,14 +1,19 @@
-__all__ = ["Student"]
+from pydantic import BaseModel, Field, HttpUrl
+import datetime
+
+__all__ = ("Student", )
 
 
-class Student:
-    def __init__(self, data: dict = {}):
-        self.json = data
+class Avatar(BaseModel):
+    image: HttpUrl | None = Field(alias="image_url")
+    created_at: datetime.datetime | None = Field(alias="datetime")
 
-        self.access_token = self.json.get("access_token")
-        self.refresh_token = self.json.get("refresh_token")
-        self.email_hash = self.json.get("email_hash")
-        self.student_id = self.json.get("student_id")
-        self.fio = self.json.get("FIO")
-        self.avatar = self.json.get("avatar")
-        self.permissions = self.json.get("permissions")
+
+class Student(BaseModel):
+    fio: str = Field(alias="FIO")
+    id: int = Field(alias="student_id")
+    avatar: Avatar
+    token: str = Field(alias="access_token")
+    refresh_token: str
+    email_hash: str
+    permissions: dict

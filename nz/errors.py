@@ -1,4 +1,4 @@
-__all__ = [
+__all__ = (
     "IncorrectNickname",
     "IncorrectPassword",
 
@@ -11,7 +11,7 @@ __all__ = [
     "InternalServerError",
 
     "UnknownError",
-]
+)
 
 
 class IncorrectNickname(Exception):

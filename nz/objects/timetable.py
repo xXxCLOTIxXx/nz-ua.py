@@ -1,41 +1,35 @@
-__all__ = ["Timetable"]
+from pydantic import BaseModel, Field
+import datetime
+
+__all__ = ("Timetable", )
 
 
-class Timetable:
-    def __init__(self, data: dict = {}):
-        self.json = data
-
-        self.days = list()
-
-        for date in self.json.get("dates", []):
-            self.days.append(Day(date))
+class Teacher(BaseModel):
+    id: int
+    name: str
 
 
-class Day:
-    def __init__(self, data: dict = {}):
-        self.json = data
-
-        self.date = self.json.get("date")
-        self.lessons = list()
-
-        for call in self.json.get("calls", []):
-            self.lessons.append(Lesson(call))
+class Subject(BaseModel):
+    name: str = Field(alias="subject_name")
+    room: str
+    teacher: Teacher
 
 
-class Lesson:
-    def __init__(self, data: dict = {}):
-        self.json = data
+class Lesson(BaseModel):
+    id: int | None = Field(alias="call_id")
+    number: int | None = Field(alias="call_number")
+    start: datetime.time = Field(alias="time_start")
+    end: datetime.time = Field(alias="time_end")
+    subjects: tuple[Subject, ...] = tuple()
 
-        subjects = self.json.get("subjects", [])
-        subject = subjects[0] if subjects else {}
 
-        teacher = subject.get("teacher", {})
+class Day(BaseModel):
+    date: datetime.date
+    lessons: tuple[Lesson, ...] = Field(alias="calls")
 
-        self.id = self.json.get("call_id")
-        self.number = self.json.get("call_number")
-        self.start = self.json.get("time_start")
-        self.end = self.json.get("time_start")
-        self.name = subject.get("subject_name")
-        self.room = subject.get("room")
-        self.teacher_id = teacher.get("id")
-        self.teacher_name = teacher.get("name")
+
+class Timetable(BaseModel):
+    days: tuple[Day, ...] = Field(alias="dates")
+
+    def __len__(self) -> int:
+        return len(self.days)
