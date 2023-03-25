@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-from nz import __version__, __author__, __description__
 
 
 def get_description():
@@ -15,9 +14,9 @@ def get_requirements():
 setup(
     name="nz-ua",
     url="https://github.com/GoldMasterPro/nz-ua",
-    version=__version__,
-    author=__author__,
-    description=__description__,
+    version="2.0.0",
+    author="GoldMasterPro",
+    description="Library for working with the nz.ua service",
     license="MIT",
     long_description_content_type="text/markdown",
     packages=find_packages(),
