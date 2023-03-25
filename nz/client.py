@@ -10,6 +10,8 @@ from .errors import (
     UnknownError,
 )
 
+__all__ = ("Client", )
+
 
 class Client:
     def __init__(self, token: str | None = None, **http_options) -> None:

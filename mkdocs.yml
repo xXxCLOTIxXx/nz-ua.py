@@ -1,0 +1,4 @@
+site_name: nz-ua
+site_description: Library for working with the nz.ua service
+theme:
+  name: material

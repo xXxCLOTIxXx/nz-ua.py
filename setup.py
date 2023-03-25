@@ -1,40 +1,37 @@
 from setuptools import setup, find_packages
+from nz import __version__, __author__, __description__
 
-with open("README.md", "r") as file:
-	long_description = file.read()
 
-link = 'https://github.com/xXxCLOTIxXx/nz-ua.py/archive/refs/heads/main.zip'
-ver = '1.1.4'
+def get_description():
+    with open("README.md") as file:
+        return file.read()
+
+
+def get_requirements():
+    with open("requirements.txt") as file:
+        return file.read().splitlines()
+
 
 setup(
-	name = "nz-ua.py",
-	version = ver,
-	url = "https://github.com/xXxCLOTIxXx/nz-ua.py",
-	download_url = link,
-	license = "MIT",
-	author = "Xsarz",
-	author_email = "xsarzy@gmail.com",
-	description = "Library for working with the nz-ua application.",
-	long_description = long_description,
-	long_description_content_type = "text/markdown",
-	keywords = [
-		"nz",
-		"nz.py",
-		"nz-ua",
-		"nz-ua.py",
-		"async"
-		"api",
-		"python",
-		"python3",
-		"python3.x",
-		"xsarz",
-		"official"
-	],
-	install_requires = [
-		"colored",
-		"aiohttp",
-		"requests",
-		"pydantic"
-	],
-	packages = find_packages()
+    name="nz-ua",
+    url="https://github.com/GoldMasterPro/nz-ua",
+    version=__version__,
+    author=__author__,
+    description=__description__,
+    license="MIT",
+    long_description_content_type="text/markdown",
+    packages=find_packages(),
+    long_description=get_description(),
+    install_requires=get_requirements(),
+    python_requires='>=3.10.0',
+    keywords=[
+        "nz",
+        "nz-ua",
+        "nz.ua",
+        "async",
+        "api",
+        "python",
+        "python3",
+        "python3.11",
+    ],
 )
