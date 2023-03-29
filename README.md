@@ -1,11 +1,20 @@
-<h1 align="center">nz-ua</h1>
-<p align="center">Library for working with the nz.ua service</p>
+nz-ua
+==========
 
-## Requirements
-Python 3.10+
+![PyPI](https://img.shields.io/pypi/v/nz-ua?style=for-the-badge)
+
+Library for working with the nz.ua service
+
+Requirements
+----------
+
+* Python 3.10+
 * [Aiohttp](https://github.com/aio-libs/aiohttp) for making requests to nz.ua api.
 * [Pydantic](https://github.com/pydantic/pydantic) for data validation.
-## Installation
+
+Installing
+----------
+
 ```console
 pip install nz-ua
 ```
@@ -13,7 +22,10 @@ Or use the version from github:
 ```console
 pip install git+https://github.com/GoldMasterPro/nz-ua
 ```
-## Quick usage
+
+Quick usage
+----------
+
 ```python
 import nz
 import asyncio
@@ -33,4 +45,9 @@ if __name__ == "__main__":
     asyncio.run(main())
 
 ```
-See the [documentation](https://GoldMasterPro.github.io/nz-ua) for more examples.
+
+Links
+------
+
+- [Documentation](https://GoldMasterPro.github.io/nz-ua)
+- [Pypi](https://test.pypi.org/project/nz-ua/)

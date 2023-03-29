@@ -1,7 +1,34 @@
 from setuptools import setup, find_packages
+import re
+
+
+def _get_variable_from_init_file(variable_name: str) -> str:
+    with open('nz/__init__.py') as file:
+        pattern: str = rf"^{variable_name}\s*=\s*[\'\"]([^\'\"]*)[\'\"]"
+        return re.search(pattern, file.read(), re.MULTILINE).group(1)
+
+
+def get_version():
+    return _get_variable_from_init_file("__version__")
+
+
+def get_name():
+    return _get_variable_from_init_file("__title__")
+
+
+def get_author():
+    return _get_variable_from_init_file("__author__")
+
+
+def get_license():
+    return _get_variable_from_init_file("__license__")
 
 
 def get_description():
+    return _get_variable_from_init_file("__description__")
+
+
+def get_long_description():
     with open("README.md") as file:
         return file.read()
 
@@ -12,15 +39,18 @@ def get_requirements():
 
 
 setup(
-    name="nz-ua",
+    name=get_name(),
     url="https://github.com/GoldMasterPro/nz-ua",
-    version="2.0.0",
-    author="GoldMasterPro",
-    description="Library for working with the nz.ua service",
-    license="MIT",
-    long_description_content_type="text/markdown",
+    project_urls={
+        'Documentation': 'https://GoldMasterPro.github.io/nz-ua',
+    },
+    version=get_version(),
+    author=get_author(),
+    description=get_description(),
+    license=get_license(),
     packages=find_packages(),
-    long_description=get_description(),
+    long_description=get_long_description(),
+    long_description_content_type="text/markdown",
     install_requires=get_requirements(),
     python_requires='>=3.10.0',
     keywords=[
