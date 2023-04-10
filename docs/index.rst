@@ -6,6 +6,6 @@ Welcome!
 .. toctree::
    :maxdepth: 2
    :caption: Tabs:
-   Install
+   install.html
    API
    Contacts
