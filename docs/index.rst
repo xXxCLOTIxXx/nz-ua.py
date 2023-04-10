@@ -5,4 +5,7 @@ Welcome!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Tabs:
+   Install
+   API
+   Contacts
