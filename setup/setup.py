@@ -4,10 +4,10 @@ with open("README.md", "r") as file:
 	long_description = file.read()
 
 link = 'https://github.com/xXxCLOTIxXx/nz-ua.py/archive/refs/heads/main.zip'
-ver = '1.1.4'
+ver = '1.1.6'
 
 setup(
-	name = "nz-ua.py",
+	name = "nz-ua.python",
 	version = ver,
 	url = "https://github.com/xXxCLOTIxXx/nz-ua.py",
 	download_url = link,
@@ -19,9 +19,11 @@ setup(
 	long_description_content_type = "text/markdown",
 	keywords = [
 		"nz",
+		"nz_ua"
 		"nz.py",
 		"nz-ua",
 		"nz-ua.py",
+		"nz.ua",
 		"async"
 		"api",
 		"python",
@@ -31,9 +33,7 @@ setup(
 		"official"
 	],
 	install_requires = [
-		"colored",
-		"aiohttp",
-		"requests"
+		"aiohttp"
 	],
 	packages = find_packages()
 )

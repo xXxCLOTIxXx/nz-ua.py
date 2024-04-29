@@ -2,7 +2,7 @@
 
 class Headers:
 	
-	def headers(self, data = None, access_token: str = None, contentType: str = 'application/json'):
+	def headers(self, data = None, access_token: str = None, contentType: str = 'application/json') -> dict:
 
 		headers = {
 		'Content-Type': contentType,
