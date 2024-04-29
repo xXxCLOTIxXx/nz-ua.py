@@ -1,6 +1,5 @@
 import aiohttp
-from . import exceptions, objects
-from json import loads
+from . import exceptions
 from datetime import datetime, date
 
 mounth_days = {
@@ -19,13 +18,13 @@ mounth_days = {
 }
 
 
-def get_mounth():
+def get_mounth() -> dict:
 	start = str(datetime.today().replace(day=1)).split(' ')[0]
 	mounth_now = start.split('-')[1]
 	end =  str(datetime.today().replace(day=mounth_days[int(mounth_now)])).split(' ')[0]
 	return {'start': start, 'end': end}
 
-def get_week():
+def get_week() -> dict:
 	dt = str(datetime.today()).split(' ')[0].split('-')
 	year = int(dt[0])
 	mounth = int(dt[1])
@@ -70,7 +69,7 @@ def get_week():
 
 	return {'start': f'{startYear}-{startMounth}-{startDay}', 'end': f'{endYear}-{endMounth}-{endDay}'}
 
-async def post(url: str, headers, data = None):
+async def post(url: str, headers, data = None) -> dict:
 	async with aiohttp.ClientSession() as session:
 		async with session.post(url, headers=headers, data=data) as response:
-			return exceptions.CheckException(await response.text()) if response.status != 200 else loads(await response.text())
+			return exceptions.CheckException(await response.text()) if response.status != 200 else await response.json()
