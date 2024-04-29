@@ -7,7 +7,7 @@ link = 'https://github.com/xXxCLOTIxXx/nz-ua.py/archive/refs/heads/main.zip'
 ver = '1.1.6'
 
 setup(
-	name = "nz",
+	name = "nz-ua.python",
 	version = ver,
 	url = "https://github.com/xXxCLOTIxXx/nz-ua.py",
 	download_url = link,
@@ -19,6 +19,7 @@ setup(
 	long_description_content_type = "text/markdown",
 	keywords = [
 		"nz",
+		"nz_ua"
 		"nz.py",
 		"nz-ua",
 		"nz-ua.py",
