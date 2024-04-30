@@ -20,7 +20,7 @@ pip install git+https://github.com/xXxCLOTIxXx/nz-ua.py.git
 - Client functions ([CLICK](#))
 - Helpers ([CLICK](#))
 - Objects ([CLICK](#))
-- Error Handlers ([CLICK](#))
+- Error Handlers ([CLICK](exceptions.md))
 
 
 # Client
