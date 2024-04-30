@@ -7,7 +7,8 @@ import asyncio
 client = nz.Client()
 
 async def main():
-	try:info = await client.login('user_name', 'password')
+	try:
+		info = await client.login('user_name', 'password')
 		print(info.json)
 	except nz.exceptions.IncorrectPassword:
 		print("password error")
@@ -16,6 +17,7 @@ async def main():
 if __name__ == '__main__':
 	loop = asyncio.get_event_loop()
 	loop.run_until_complete(loop.create_task(main()))
+
 ```
 
 ## All types of exceptions
