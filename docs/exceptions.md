@@ -1,4 +1,4 @@
-[« back](javascript:history.back())
+[« main](main.md)
 ## Using:
 
 ```python
