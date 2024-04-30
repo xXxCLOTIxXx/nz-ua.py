@@ -51,3 +51,5 @@ client = nz.Client(
 )
 student_object = client.student
 ```
+
+[Client functions](client_functions.md)
