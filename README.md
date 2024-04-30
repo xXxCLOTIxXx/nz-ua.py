@@ -1,6 +1,6 @@
 <body>
 	<p align="center">
-	    <a href="https://github.com/xXxCLOTIxXx/nz-ua.py/releases"><img src="https://img.shields.io/github/release/xXxCLOTIxXx/nz-ua.py.svg" alt="GitHub release" />
+	    <a href="https://github.com/xXxCLOTIxXx/nz-ua.py/releases"><img src="https://img.shields.io/github/v/release/xXxCLOTIxXx/nz-ua.py" alt="GitHub release" />
 	    <a href="https://github.com/xXxCLOTIxXx/nz-ua.py/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="licence" /></a>
 	    <a href="https://pypi.org/project/nz-ua.python/"><img src="https://img.shields.io/pypi/v/nz-ua.python" alt="pypi" /></a>
 	    <a href="https://github.com/xXxCLOTIxXx/nz-ua.py/blob/dev/docs/main.md"><img src="https://img.shields.io/website?down_message=failing&label=docs&up_color=green&up_message=passing&url=https://github.com/xXxCLOTIxXx/nz-ua.py/blob/dev/docs/main.md" alt="docs" /></a>
