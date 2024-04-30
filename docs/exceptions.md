@@ -8,9 +8,9 @@ client = nz.Client()
 
 async def main():
 	try:info = await client.login('user_name', 'password')
-	  print(info.json)
-  except nz.exceptions.IncorrectPassword:
-    print("password error")
+		print(info.json)
+	except nz.exceptions.IncorrectPassword:
+		print("password error")
 
 
 if __name__ == '__main__':
