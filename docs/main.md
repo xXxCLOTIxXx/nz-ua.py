@@ -17,9 +17,8 @@ pip install git+https://github.com/xXxCLOTIxXx/nz-ua.py.git
 
 ## Quick Links
 - Client ([CLICK](#client))
-- Client functions ([CLICK](#))
-- Helpers ([CLICK](#))
-- Objects ([CLICK](#))
+- Client functions ([CLICK](client_functions.md))
+- Objects ([CLICK](objects.md))
 - Error Handlers ([CLICK](exceptions.md))
 
 
