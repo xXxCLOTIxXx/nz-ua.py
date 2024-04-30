@@ -74,7 +74,63 @@ Hometask.File.size: str
 Hometask.File.createTime: str
 ```
 #
-# `UploadHometask`
+# `Timetable`
+### `Attributes`
+```python
+from nz import objects
+Timetable = objects.Timetable()
+
+Timetable.json: dict
+Timetable.error_message: str
+Timetable.dates: list #Dates
+
+Timetable.dates[0]: Timetable.Dates
+
+Timetable.Dates.json: dict
+Timetable.Dates.date: str
+Timetable.Dates.lessons: list #Lesson
+
+Timetable.Dates.lessons[0]: Timetable.Dates.Lesson
+
+Timetable.Dates.Lesson.json: dict
+Timetable.Dates.Lesson.lessonId: int
+Timetable.Dates.Lesson.lessonNumber: int
+Timetable.Dates.Lesson.lessonStrat: str
+Timetable.Dates.Lesson.lessonEnd: str
+Timetable.Dates.Lesson.subjects: list #Subjects
+
+Timetable.Dates.Lesson.subjects[0]: Timetable.Dates.Lesson.Subjects
+
+Timetable.Dates.Lesson.Subjects.json: dict
+Timetable.Dates.Lesson.Subjects.lessonName: str
+Timetable.Dates.Lesson.Subjects.room: str
+Timetable.Dates.Lesson.Subjects.teacherId: int
+Timetable.Dates.Lesson.Subjects.teacherName: str
+```
+#
+# `StudentPerformance`
+### `Attributes`
+```python
+from nz import objects
+StudentPerformance = objects.StudentPerformance()
+
+StudentPerformance.json: dict
+StudentPerformance.missedDays: int
+StudentPerformance.missedLessons: int
+StudentPerformance.error_message: str
+StudentPerformance.subjects: list #Subjects
+
+StudentPerformance.subjects[0]: StudentPerformance.Subjects
+
+StudentPerformance.Subjects.json: dict
+StudentPerformance.Subjects.subjectId: int
+StudentPerformance.Subjects.subjectName: str
+StudentPerformance.Subjects.marks: list
+```
+
+
+#
+# `LessonPerformance`
 ### `Attributes`
 ```python
 from nz import objects
