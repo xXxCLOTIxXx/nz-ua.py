@@ -17,7 +17,7 @@ Student.avatar: str
 Student.permissions: str
 Student.error_message: str
 ```
-#
+---
 # `Schedule`
 ### `Attributes`
 ```python
@@ -48,7 +48,7 @@ Schedule.Day.Lesson.type: str
 Schedule.Day.Lesson.mark: str
 Schedule.Day.Lesson.comment: str
 ```
-#
+---
 # `Hometask`
 ### `Attributes`
 ```python
@@ -73,7 +73,7 @@ Hometask.File.url: str
 Hometask.File.size: str
 Hometask.File.createTime: str
 ```
-#
+---
 # `Timetable`
 ### `Attributes`
 ```python
@@ -107,7 +107,7 @@ Timetable.Dates.Lesson.Subjects.room: str
 Timetable.Dates.Lesson.Subjects.teacherId: int
 Timetable.Dates.Lesson.Subjects.teacherName: str
 ```
-#
+---
 # `StudentPerformance`
 ### `Attributes`
 ```python
@@ -127,9 +127,7 @@ StudentPerformance.Subjects.subjectId: int
 StudentPerformance.Subjects.subjectName: str
 StudentPerformance.Subjects.marks: list
 ```
-
-
-#
+---
 # `LessonPerformance`
 ### `Attributes`
 ```python
@@ -141,7 +139,7 @@ LessonPerformance.missedLessons: int
 LessonPerformance.lessons: list
 LessonPerformance.error_message: str
 ```
-#
+---
 # `UploadHometask`
 ### `Attributes`
 ```python
@@ -159,4 +157,3 @@ UploadHometask.Files.json: dict
 UploadHometask.Files.fileId: int
 UploadHometask.Files.fileName: str
 ```
-#
