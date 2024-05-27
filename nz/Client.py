@@ -1,6 +1,7 @@
 from .utils import helpers, objects
 from .utils.headers import Headers
 from json import dumps
+import os.path
 
 class Client(Headers):
 	def __init__(self, profile: objects.Student = None):
@@ -100,3 +101,29 @@ class Client(Headers):
 		return objects.UploadHometask(
 			await helpers.post(f"{self.api}/schedule/student-answer", headers=self.headers(access_token=self.student.accessToken, data=data), data=data)
 		)
+
+
+	async def hometask_answer(self, hometaskId: int, file_path: str = None, text: str = None):
+		#not tested (may be incorrect)
+
+		data = FormData()
+		file_name = os.path.basename(file_path)
+		if file_path:
+			file_name = os.path.basename(file_path)
+			data.add_field('files[0]', open(file_path, 'rb'), filename=file_name)
+		if text:
+			data.add_field('hometask_text', hometask_text)
+		if text is None and file_path is None:raise Exception("Wrong type")
+		
+		data.add_field('student_id', str(self.student.studentId))
+		data.add_field('hometask_id', str(hometaskId))
+
+		return objects.UploadHometask(
+			await helpers.post(f"{self.api}/schedule/student-answer", headers=self.headers(access_token=self.student.accessToken, data=data), data=data)
+		)
+
+		
+	
+
+
+
