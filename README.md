@@ -1,4 +1,7 @@
 <body>
+	<h1 align="center">
+		<img src="banner.png" alt="nz-ua">
+	</h1>
 	<p align="center">
 	    <a href="https://github.com/xXxCLOTIxXx/nz-ua.py/releases"><img src="https://img.shields.io/github/v/release/xXxCLOTIxXx/nz-ua.py" alt="GitHub release" />
 	    <a href="https://github.com/xXxCLOTIxXx/nz-ua.py/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="licence" /></a>
@@ -28,7 +31,6 @@
 			</td>
 		</tr>
 	</table>
-<h1 align="center">nz-ua.py</h1>
 <p align="center">Library for working with nz ua servers</p>
 <h1 align="center">Login example</h1>
 
